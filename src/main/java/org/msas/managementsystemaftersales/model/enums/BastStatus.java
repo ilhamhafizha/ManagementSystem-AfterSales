@@ -1,4 +1,4 @@
-package org.msas.managementsystemaftersales.model;
+package org.msas.managementsystemaftersales.model.enums;
 
 public enum BastStatus {
     RECEIVED,

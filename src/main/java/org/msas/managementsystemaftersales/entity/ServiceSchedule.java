@@ -1,29 +1,30 @@
 package org.msas.managementsystemaftersales.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "validation_logs")
+@Table(name = "service_schedules")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ValidationLog {
+public class ServiceSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long logId;
+    private Long id;
 
-    private String message;
-    private String missingField;
+    private LocalDate jadwalServicePertama;
+    private LocalDate jadwalServiceRutin;
 
-    private LocalDate tglLog;
+    private Boolean statusService;
 
     @ManyToOne
-    @JoinColumn(name = "bast_document_id")
-    private BastDocument bastDocument;
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 }
 
