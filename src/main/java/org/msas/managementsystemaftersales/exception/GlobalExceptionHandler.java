@@ -14,30 +14,38 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntime(RuntimeException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(Map.of(
-                        "timestamp", LocalDateTime.now(),
-                        "message", ex.getMessage()
-                ));
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(Map.of(
+//                        "timestamp", LocalDateTime.now(),
+//                        "message", ex.getMessage()
+//                ));
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("BAST validated successfully")
+                        .data(ex)
+                        .build()
+        );
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneral(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(
-                        "timestamp", LocalDateTime.now(),
-                        "message", "Internal server error"
-                ));
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(Map.of(
+//                        "timestamp", LocalDateTime.now(),
+//                        "message", "Internal server error"
+//                ));
 
-//        return ResponseEntity.ok(
-//                ApiResponse.builder()
-//                        .success(true)
-//                        .message("BAST validated successfully")
-//                        .data(response)
-//                        .build()
-//        );
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("BAST validated successfully")
+                        .data(ex)
+                        .build()
+        );
 
     }
 }
