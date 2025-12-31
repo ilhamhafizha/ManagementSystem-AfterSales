@@ -16,15 +16,20 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/bast/**").hasRole("OPS")
-                .requestMatchers("/api/service-schedules/**").hasAnyRole("OPS", "BISNIS")
-                .anyRequest().authenticated()
-            )
-            .httpBasic(Customizer.withDefaults());
+//            .authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/api/bast/**").hasRole("OPS")
+//                .requestMatchers("/api/service-schedules/**").hasAnyRole("OPS", "BISNIS")
+//                .anyRequest().authenticated()
+//            )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/**").permitAll()
+                )
+
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
+
 
     @Bean
     public InMemoryUserDetailsManager users() {
@@ -39,4 +44,6 @@ public class SecurityConfig {
                         .build()
         );
     }
+
+
 }
