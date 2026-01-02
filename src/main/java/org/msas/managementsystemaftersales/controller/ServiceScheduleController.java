@@ -1,8 +1,8 @@
 package org.msas.managementsystemaftersales.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.msas.managementsystemaftersales.entity.ServiceSchedule;
-import org.msas.managementsystemaftersales.repository.ServiceScheduleRepository;
+import org.msas.managementsystemaftersales.dto.ServiceScheduleResponse;
+import org.msas.managementsystemaftersales.service.ServiceScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServiceScheduleController {
 
-    private final ServiceScheduleRepository repository;
+    private final ServiceScheduleService service;
 
     @GetMapping
-    public List<ServiceSchedule> getAll() {
-        return repository.findAll();
+    public List<ServiceScheduleResponse> getAll() {
+        return service.getAll();
     }
 }

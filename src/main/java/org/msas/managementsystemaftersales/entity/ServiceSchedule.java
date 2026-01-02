@@ -5,8 +5,12 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+
 @Entity
-@Table(name = "service_schedules")
+@Table(name = "service_schedule",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"vehicle_id", "service_type"})
+})
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,13 +22,19 @@ public class ServiceSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate jadwalServicePertama;
-    private LocalDate jadwalServiceRutin;
+    @Column(nullable = false)
+    private LocalDate jadwalService;
 
-    private Boolean statusService;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ServiceType serviceType;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id")
+    @Column(nullable = false)
+    private Boolean statusService = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 }
+
 

@@ -29,17 +29,24 @@ public class BastController {
             @RequestBody BastCreateRequest request
     ) {
 
-        Vehicle vehicle = Vehicle.builder()
-                .nomorPolisi(request.getNomorPolisi())
-                .nomorRangka(request.getNomorRangka())
-                .nomorMesin(request.getNomorMesin())
-                .jenisMobil(request.getJenisMobil())
-                .warna(request.getWarna())
-                .lokasiPengiriman(request.getLokasiPengiriman())
-                .build();
+        // 1️⃣ CARI VEHICLE DULU
+        Vehicle vehicle = vehicleRepository
+                .findByNomorMesin(request.getNomorMesin())
+                .orElseGet(() -> {
+                    // 2️⃣ KALAU BELUM ADA, BARU CREATE
+                    Vehicle newVehicle = Vehicle.builder()
+                            .nomorPolisi(request.getNomorPolisi())
+                            .nomorRangka(request.getNomorRangka())
+                            .nomorMesin(request.getNomorMesin())
+                            .jenisMobil(request.getJenisMobil())
+                            .warna(request.getWarna())
+                            .lokasiPengiriman(request.getLokasiPengiriman())
+                            .build();
 
-        vehicleRepository.save(vehicle);
+                    return vehicleRepository.save(newVehicle);
+                });
 
+        // 3️⃣ BUAT BAST
         BastDocument bast = BastDocument.builder()
                 .vehicle(vehicle)
                 .statusBAST(BastStatus.RECEIVED)

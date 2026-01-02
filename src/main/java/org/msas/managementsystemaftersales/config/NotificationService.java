@@ -1,4 +1,5 @@
 package org.msas.managementsystemaftersales.config;
+
 import lombok.extern.slf4j.Slf4j;
 import org.msas.managementsystemaftersales.entity.ServiceSchedule;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,10 @@ public class NotificationService {
 
     public void notifyOps(ServiceSchedule schedule) {
         log.info(
-                "[NOTIFICATION] Vehicle ID: {} | Service Date: {}",
+                "[NOTIFICATION] Vehicle ID: {} | Service Date: {} | Type: {}",
                 schedule.getVehicle().getId(),
-                schedule.getJadwalServiceRutin()
+                schedule.getJadwalService(),
+                schedule.getServiceType()
         );
     }
 }
-

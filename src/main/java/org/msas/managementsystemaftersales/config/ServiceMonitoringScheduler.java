@@ -1,7 +1,9 @@
 package org.msas.managementsystemaftersales.config;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.msas.managementsystemaftersales.entity.ServiceSchedule;
+import org.msas.managementsystemaftersales.entity.ServiceType;
 import org.msas.managementsystemaftersales.repository.ServiceScheduleRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -25,9 +27,10 @@ public class ServiceMonitoringScheduler {
         LocalDate reminderDate = today.plusDays(7);
 
         List<ServiceSchedule> schedules =
-                serviceScheduleRepository.findByJadwalServiceRutinBetween(
+                serviceScheduleRepository.findByJadwalServiceBetweenAndServiceType(
                         today,
-                        reminderDate
+                        reminderDate,
+                        ServiceType.ROUTINE
                 );
 
         for (ServiceSchedule schedule : schedules) {
@@ -36,7 +39,9 @@ public class ServiceMonitoringScheduler {
             }
         }
 
-        log.info("Service schedule monitoring completed. Total checked: {}", schedules.size());
+        log.info(
+                "Service schedule monitoring completed. Total checked: {}",
+                schedules.size()
+        );
     }
 }
-
