@@ -21,3 +21,8 @@ spring:
 logging:
   level:
     root: INFO
+
+wa:
+  api:
+    url: https://api.fonnte.com/send
+    token: RGSbu55y691bxv4bwMdv

@@ -6,6 +6,7 @@ import org.msas.managementsystemaftersales.entity.ServiceReminderLog;
 import org.msas.managementsystemaftersales.entity.ServiceSchedule;
 import org.msas.managementsystemaftersales.repository.ServiceReminderLogRepository;
 import org.msas.managementsystemaftersales.repository.ServiceScheduleRepository;
+import org.msas.managementsystemaftersales.service.WhatsappService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,22 @@ public class ServiceReminderScheduler {
 
     private final ServiceScheduleRepository serviceScheduleRepository;
     private final ServiceReminderLogRepository reminderLogRepository;
+    private final WhatsappService whatsappService;
+
+    private String buildMessage(ServiceSchedule s, String reminderType) {
+        return String.format(
+                "🔔 Reminder Service %s\n\n" +
+                        "Vehicle ID: %d\n" +
+                        "Service Type: %s\n" +
+                        "Jadwal Service: %s\n\n" +
+                        "Mohon segera lakukan service tepat waktu 🙏",
+                reminderType,
+                s.getVehicle().getId(),
+                s.getServiceType(),
+                s.getJadwalService()
+        );
+    }
+
 
     @Scheduled(cron = "0 * * * * *") // test tiap menit
     public void checkUpcomingServices() {
@@ -64,23 +81,46 @@ public class ServiceReminderScheduler {
             }
 
             // 🔔 SIMULASI KIRIM REMINDER
-            log.info(
-                    "🔔 REMINDER {} | vehicleId={} | serviceType={} | jadwal={}",
-                    reminderType,
-                    s.getVehicle().getId(),
-                    s.getServiceType(),
-                    s.getJadwalService()
-            );
+//            log.info(
+//                    "🔔 REMINDER {} | vehicleId={} | serviceType={} | jadwal={}",
+//                    reminderType,
+//                    s.getVehicle().getId(),
+//                    s.getServiceType(),
+//                    s.getJadwalService()
+//            );
 
-            // ✅ SIMPAN LOG
+//            String phoneNumber = "620000000"; // TESTING DULU
+//            String message = buildMessage(s, reminderType);
+//
+//            whatsappService.sendMessage(phoneNumber, message);
+//
+//
+//            // ✅ SIMPAN LOG
+//            reminderLogRepository.save(
+//                    ServiceReminderLog.builder()
+//                            .serviceScheduleId(s.getId())
+//                            .vehicleId(s.getVehicle().getId())
+//                            .reminderType(reminderType)
+//                            .sentAt(LocalDateTime.now())
+//                            .build()
+//            );
+//        });
+
+            String phoneNumber = "6281283486983"; // ambil dari DB nanti
+            String message = buildMessage(s, reminderType);
+
+            boolean waSent = whatsappService.sendMessage(phoneNumber, message);
+
             reminderLogRepository.save(
                     ServiceReminderLog.builder()
                             .serviceScheduleId(s.getId())
                             .vehicleId(s.getVehicle().getId())
                             .reminderType(reminderType)
+                            .waStatus(waSent ? "SENT" : "FAILED")
                             .sentAt(LocalDateTime.now())
                             .build()
             );
         });
+
     }
 }

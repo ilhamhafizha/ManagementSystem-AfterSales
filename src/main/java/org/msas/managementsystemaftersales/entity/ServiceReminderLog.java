@@ -24,4 +24,7 @@ public class ServiceReminderLog {
     private String reminderType; // H7 atau H14
 
     private LocalDateTime sentAt;
+
+    private String waStatus; // SENT / FAILED
+
 }
