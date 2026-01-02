@@ -35,6 +35,10 @@ public class ServiceSchedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
+
+    @Column
+    private LocalDate tanggalServiceAktual;
+
 }
 
 

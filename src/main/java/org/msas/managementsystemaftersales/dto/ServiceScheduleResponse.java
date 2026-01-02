@@ -27,4 +27,5 @@ public class ServiceScheduleResponse {
     public LocalDate getJadwalService() { return jadwalService; }
     public ServiceType getServiceType() { return serviceType; }
     public Boolean getStatusService() { return statusService; }
+
 }

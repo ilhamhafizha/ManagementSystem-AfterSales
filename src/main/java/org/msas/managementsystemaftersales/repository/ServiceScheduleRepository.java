@@ -22,5 +22,8 @@ public interface ServiceScheduleRepository
     // untuk endpoint vehicle
     List<ServiceSchedule> findByVehicleId(Long vehicleId);
     boolean existsByVehicleId(Long vehicleId);
+
+    List<ServiceSchedule> findByStatusService(Boolean status);
+
 }
 
