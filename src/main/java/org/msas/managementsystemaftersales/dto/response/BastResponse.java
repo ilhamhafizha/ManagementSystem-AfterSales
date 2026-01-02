@@ -1,4 +1,4 @@
-package org.msas.managementsystemaftersales.dto.respon;
+package org.msas.managementsystemaftersales.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

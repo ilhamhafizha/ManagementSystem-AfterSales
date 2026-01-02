@@ -1,4 +1,4 @@
-package org.msas.managementsystemaftersales.dto.respon.response;
+package org.msas.managementsystemaftersales.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,5 @@ public class ApiResponse<T> {
     private boolean success;
     private String message;
     private T data;
-
-
 }
 

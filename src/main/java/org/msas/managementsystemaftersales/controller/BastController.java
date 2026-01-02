@@ -2,7 +2,7 @@ package org.msas.managementsystemaftersales.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.msas.managementsystemaftersales.dto.request.BastCreateRequest;
-import org.msas.managementsystemaftersales.dto.respon.BastResponse;
+import org.msas.managementsystemaftersales.dto.response.BastResponse;
 import org.msas.managementsystemaftersales.entity.BastDocument;
 import org.msas.managementsystemaftersales.entity.Vehicle;
 import org.msas.managementsystemaftersales.model.enums.BastStatus;
